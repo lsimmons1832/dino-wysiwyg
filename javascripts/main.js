@@ -1,12 +1,11 @@
-var dinoArray = [];
-
 $.ajax('./db/dinosaurs.json').done(function(data){
-	dinoArray = data.dinosaurs;
+	var dinoArray = data.dinosaurs;
 	makeDOM(dinoArray);
 }).fail(function(error){
 	console.log("Warning! There is an issue!", error);
 });
 
+//loop through objects
 function makeDOM(myArrayToPrint){
 	var myDOMString = '';
 	for (var i = 0; i < myArrayToPrint.length; i++) {
@@ -19,5 +18,28 @@ function makeDOM(myArrayToPrint){
 		myDOMString += `<footer>${myArrayToPrint[i].info}</footer>`;
 		myDOMString += `</div>`;
 	}
-	$('#dinosaur').append(myDOMString);
+	//write objects to the DOM
+	$('#dinosaurs').append(myDOMString);
+}
+
+//add border to slected card
+$("#dinosaurs").on("click", ".dinoCard", function(e){
+	$(".dinoCard").removeClass("dottedBorder");
+	$(this).addClass("dottedBorder");
+	$("#textbox").val("").focus();
+});
+
+//add event listener to input field
+$("#textbox").keyup(mirrorText);
+
+//replace text in bio as user types in input field
+function mirrorText(e){
+	var selectedCard = $(".dottedBorder");
+	var bioTyped = $("#textbox").val();
+	var bio = $(".dottedBorder").find("p.bio");
+	bio.html(bioTyped);
+
+	if (e.keyCode == 13){
+		$("#textbox").val("");
+	}
 }
