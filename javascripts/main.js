@@ -8,7 +8,12 @@ $.ajax('./db/dinosaurs.json').done(function(data){
 //loop through objects
 function makeDOM(myArrayToPrint){
 	var myDOMString = '';
+	var counter = 0;
 	for (var i = 0; i < myArrayToPrint.length; i++) {
+		if (counter === 0 || counter%3 ===0){
+		myDOMString += `<div class="row">`;
+	}
+		myDOMString += `<div class="col-xs-6 col-sm-3">`;
 		myDOMString += `<div class="dinoCard">`;
 		myDOMString += `<header><h1>${myArrayToPrint[i].type}</h1></header>`;
 		myDOMString += `<section>`;
@@ -16,15 +21,19 @@ function makeDOM(myArrayToPrint){
 		myDOMString += `<p class='bio'>${myArrayToPrint[i].bio}</p>`;
 		myDOMString += `</section>`;
 		myDOMString += `<footer>${myArrayToPrint[i].info}</footer>`;
-		myDOMString += `</div>`;
+		myDOMString += `</div></div>`;
+		counter++
+		if(counter%3 === 0){
+			myDOMString += `</div><div class="clearfix visible-xs-block"></div>`;
+		}
 	}
 	//write objects to the DOM
 	$('#dinosaurs').append(myDOMString);
 }
 
 //add border to slected card
-$("#dinosaurs").on("click", ".dinoCard", function(e){
-	$(".dinoCard").removeClass("dottedBorder");
+$("#dinosaurs").on("click", ".row", function(e){
+	$(".row").removeClass("dottedBorder");
 	$(this).addClass("dottedBorder");
 	$("#textbox").val("").focus();
 });
@@ -43,3 +52,4 @@ function mirrorText(e){
 		$("#textbox").val("");
 	}
 }
+
