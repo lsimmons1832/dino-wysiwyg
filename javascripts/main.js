@@ -32,8 +32,8 @@ function makeDOM(myArrayToPrint){
 }
 
 //add border to slected card
-$("#dinosaurs").on("click", ".row", function(e){
-	$(".row").removeClass("dottedBorder");
+$("#dinosaurs").on("click", ".col-xs-6", function(e){
+	$(".col-xs-6").removeClass("dottedBorder");
 	$(this).addClass("dottedBorder");
 	$("#textbox").val("").focus();
 });
